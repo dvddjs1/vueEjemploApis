@@ -11,6 +11,7 @@
                 v-model="form.txtBusqueda"
                 placeholder="Buscar por:"
               ></el-input>
+              {{ form.txtBusqueda }}
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">Buscar</el-button>
@@ -26,8 +27,11 @@
 
     <el-row type="flex" v-loading="Loadinggenderize">
       <el-col :span="24">
-        <el-card shadow="hover">
-          {{ datagenderize }}
+        <el-card shadow="hover" v-if="!Loadinggenderize && datagenderize.gender" >
+          <h2> Genero ( {{ datagenderize.probability }} ): </h2>
+          <img v-if="datagenderize.gender == 'male'" src="../assets/man.png" alt="">
+          <img v-else src="../assets/woman.png" alt="">
+          <p> {{ datagenderize }} </p>
         </el-card>
       </el-col>
     </el-row>
@@ -36,7 +40,7 @@
       <el-col :span="24" >
         <el-card shadow="hover" v-if="!Loadingnationalize && datanationalize.name">
 
-          <h1> {{ datanationalize.name }} </h1>
+          <h2> {{ datanationalize.name }} </h2>
 
           <el-table :data="datanationalize.country" style="width: 100%">
               <el-table-column prop="country_id" label="Pais" width="180">
@@ -45,6 +49,8 @@
               </el-table-column>
           </el-table>
 
+          
+
         </el-card>
       </el-col>
     </el-row>
@@ -52,6 +58,7 @@
     <el-row type="flex" v-loading="Loadingagify">
       <el-col :span="24">
         <el-card shadow="hover">
+          <h2> Edad estimada ( {{ dataagify.count }} ): </h2>
           {{ dataagify }}
         </el-card>
       </el-col>
